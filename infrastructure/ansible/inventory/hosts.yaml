@@ -1,0 +1,11 @@
+---
+all:
+  children:
+    local:
+      hosts:
+        kratos:
+          ansible_host: 192.168.0.107
+
+    remote:
+      hosts:
+        erudites:
