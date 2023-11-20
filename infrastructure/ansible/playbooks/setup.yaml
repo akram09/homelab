@@ -1,0 +1,82 @@
+---
+- hosts:
+    - kratos
+  become: true
+  roles:
+    - os
+    - role: upgrade
+      vars:
+        allow_reboot: false
+
+- hosts:
+    - kratos
+  become: true
+  pre_tasks:
+    - name: Check supported distribution
+      ansible.builtin.fail:
+        msg:
+          - "Unsupported distribution: {{ ansible_facts['distribution'] | lower }}"
+          - This role only supports Arch Linux
+      when: ansible_facts['distribution'] | lower != 'archlinux'
+
+    - name: Install packages
+      ansible.builtin.package:
+        state: latest
+        name:
+          - base
+          - dhcpcd
+          - dosfstools
+          - efibootmgr
+          - git
+          - grub
+          - vim
+          - linux
+          - linux-headers
+          - linux-firmware
+          - mtools
+          - nano
+          - os-prober
+          - btop
+          - curl
+          - intel-ucode
+          - mesa
+          - networkmanager
+          - net-tools
+          - openssh
+          - reflector
+          - rsync
+          - smartmontools
+          - tmux
+          - trash-cli
+          - unzip
+          - usbutils
+          - zsh
+          - wget
+          - man-db
+          - less
+          - fd
+          - gdu
+          - bottom
+
+    - name: Install AUR dependencies
+      ansible.builtin.include_role:
+        name: aur
+      vars:
+        state: latest
+        packages:
+          - downgrade
+          - vim-plug
+          - needrestart
+
+  roles:
+    - clamav
+    - ssh
+    - etckeeper
+    - user
+    - role: dotfiles
+      vars:
+        dotfiles_repo: https://github.com/brettinternet/dotfiles
+        default_direnv_lines:
+          - export KUBECONFIG="/etc/rancher/k3s/k3s.yaml"
+    - cockpit
+    - kubecolor

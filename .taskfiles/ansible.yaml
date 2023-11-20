@@ -21,6 +21,31 @@ tasks:
     cmds:
       - ansible all -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yaml --list-hosts
 
+  setup:
+    desc: Setup all the k8s nodes for running k3s
+    dir: infrastructure/ansible
+    cmds:
+      - ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yaml {{.ANSIBLE_PLAYBOOK_DIR}}/setup.yaml
+
+  kubernetes:
+    desc: Install Kubernetes on the nodes
+    dir: infrastructure/ansible
+    cmds:
+      - ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yaml {{.ANSIBLE_PLAYBOOK_DIR}}/kubernetes.yaml
+
+  status:
+    desc: Show k3s service status
+    dir: infrastructure/ansible
+    cmds:
+      - ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yaml {{.ANSIBLE_PLAYBOOK_DIR}}/status.yaml
+
+  uninstall-kubernetes:
+    desc: Uninstall Kubernetes on the nodes
+    dir: infrastructure/ansible
+    interactive: true
+    cmds:
+      - ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yaml {{.ANSIBLE_PLAYBOOK_DIR}}/uninstall-kubernetes.yaml
+
   ping:
     desc: Ping all the hosts
     dir: infrastructure/ansible

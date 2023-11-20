@@ -1,0 +1,10 @@
+---
+# defaults file for os
+supported_distributions:
+  - archlinux
+  - debian
+
+# (string) Timezone for the servers
+timezone: "{{ lookup('ansible.builtin.env', 'TIMEZONE') | default('Europe/Paris', true) }}"
+# (list) Additional ssh public keys to add to the nodes
+# ssh_authorized_keys:

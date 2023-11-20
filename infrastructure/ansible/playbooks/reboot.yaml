@@ -1,0 +1,18 @@
+---
+- hosts:
+    - all
+    # - pi-0
+    # - pi-1
+    # - pi-2
+    # - pi-3
+    # - pi-4
+    # - harambe
+    # - tars
+    # - baja
+  gather_facts: false
+  become: true
+  tasks:
+    - name: Reboot
+      ansible.builtin.reboot:
+      retries: 10
+      delay: 10
