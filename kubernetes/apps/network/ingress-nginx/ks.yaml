@@ -41,11 +41,11 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  path: "./kubernetes/cluster-0/apps/network/ingress-nginx/internal"
+  path: "./kubernetes/apps/network/ingress-nginx/internal"
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-ops-kubernetes
+    name: homelab
   wait: false
   dependsOn:
     - name: nginx-shared
