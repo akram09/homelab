@@ -60,9 +60,9 @@ spec:
       main:
         enabled: true
         annotations:
-          external-dns.alpha.kubernetes.io/target: ingress-ext.akramboutou.xyz
+          external-dns.alpha.kubernetes.io/target: ingress.akramboutou.xyz
           nginx.ingress.kubernetes.io/backend-protocol: HTTPS
-        className: "external-nginx"
+        className: "nginx"
         hosts:
           - host: &host plex.akramboutou.xyz
             paths:

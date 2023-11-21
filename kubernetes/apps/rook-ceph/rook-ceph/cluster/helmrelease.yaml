@@ -94,12 +94,12 @@ spec:
               - name: "nvme0n1p5"
 
     ingress:
-      ingressClassName: "internal-nginx"
+      ingressClassName: "nginx"
       dashboard:
         annotations:
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
         host:
-          name: &host rook-cluster-0.bjw-s.dev
+          name: &host rook-cluster.akramboutou.xyz
           path: "/"
         tls:
           - hosts:

@@ -64,7 +64,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: "internal-nginx"
+        className: "nginx"
         hosts:
           - host: "${HOSTNAME}"
             paths:
