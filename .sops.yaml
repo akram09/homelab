@@ -1,0 +1,9 @@
+keys:
+  - &host_kratos age1yfq0fyh2zthkacffmylwnaqdl79fu6273h5c5kpr4rcr5l8nrg5qdrd54u
+
+creation_rules:
+  - path_regex: kubernetes/.*\.sops\.ya?ml$
+    encrypted_regex: "^(data|stringData)$"
+    key_groups:
+      - age:
+          - *host_kratos
