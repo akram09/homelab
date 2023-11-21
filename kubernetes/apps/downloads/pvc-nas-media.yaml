@@ -21,7 +21,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: downloads-nas-media
+  storageClassName: manual
   resources:
     requests:
-      storage: 1Ti # Size does not matter
+      storage: 1Ti
