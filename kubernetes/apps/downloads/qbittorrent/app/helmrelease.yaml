@@ -81,7 +81,7 @@ spec:
               - name: DOT
                 value: "off"
               - name: DNS_PLAINTEXT_ADDRESS
-                value: "127.0.0.2"
+                value: "10.43.0.10"
             envFrom:
               - secretRef:
                   name: qbittorrent-secret
