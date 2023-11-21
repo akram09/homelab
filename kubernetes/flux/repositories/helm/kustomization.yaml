@@ -13,6 +13,7 @@ resources:
   - deliveryhero.yaml
   - descheduler.yaml
   - dysnix.yaml
+  - external-secrets.yaml
   - external-dns.yaml
   - fairwinds.yaml
   - grafana.yaml
