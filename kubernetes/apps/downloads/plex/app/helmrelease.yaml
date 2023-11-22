@@ -24,6 +24,15 @@ spec:
 
         pod:
           enableServiceLinks: false
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: "OnRootMismatch"
+            supplementalGroups:
+              - 44
+              - 109
+              - 65542 # gladius:external-services
 
         containers:
           main:
