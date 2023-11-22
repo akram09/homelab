@@ -29,8 +29,7 @@ spec:
 
       service:
         enabled: true
-        type: LoadBalancer
-        loadBalancerClass: "tailscale"
+        type: NodePort
         allocateLoadBalancerNodePorts: false
 
 
