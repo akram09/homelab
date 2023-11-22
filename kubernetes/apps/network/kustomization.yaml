@@ -6,4 +6,5 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./ingress-nginx/ks.yaml
-  - ./tailscale/ks.yaml
+  - ./external-dns/ks.yaml
+  - ./cloudflared/ks.yaml

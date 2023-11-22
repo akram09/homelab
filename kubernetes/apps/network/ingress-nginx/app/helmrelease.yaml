@@ -19,7 +19,7 @@ spec:
     fullnameOverride: nginx
 
     controller:
-      replicaCount: 3
+      replicaCount: 1
 
       updateStrategy:
         type: RollingUpdate
@@ -30,13 +30,9 @@ spec:
       service:
         enabled: true
         type: LoadBalancer
-        annotations:
-          external-dns.alpha.kubernetes.io/hostname: "ingress.akramboutou.xyz"
-          io.cilium/lb-ipam-ips: "192.168.0.108"
-        externalTrafficPolicy: Cluster
+        loadBalancerClass: "tailscale"
+        allocateLoadBalancerNodePorts: false
 
-      publishService:
-        enabled: true
 
       ingressClassResource:
         name: nginx
