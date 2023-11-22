@@ -1,12 +1,11 @@
 ---
-# Add CNAME record -> 4f4293d6-424a-4d06-9e4f-83dd262e8756.cfargotunnel.com
-no-autoupdate: true
-
-originRequest:
-  connectTimeout: 30s
-  http2Origin: true
-
 ingress:
-  - service: https://nginx-controller.network.svc.cluster.local
+  - hostname: "akramboutou.xyz"
+    service: https://nginx-controller.network.svc.cluster.local:443
     originRequest:
-      noTLSVerify: true
+      originServerName: ingress.akramboutou.xyz
+  - hostname: "*.akramboutou.xyz"
+    service: https://nginx-external-controller.network.svc.cluster.local:443
+    originRequest:
+      originServerName: ingress.akramboutou.xyz
+  - service: http_status:404

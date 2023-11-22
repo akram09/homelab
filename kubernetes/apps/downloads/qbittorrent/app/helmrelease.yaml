@@ -111,6 +111,8 @@ spec:
     ingress:
       main:
         enabled: true
+        annotations:
+          external-dns.alpha.kubernetes.io/target: ingress.akramboutou.xyz
         className: "nginx"
         hosts:
           - host: "${HOSTNAME}"
