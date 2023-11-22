@@ -5,7 +5,7 @@ ingress:
     originRequest:
       originServerName: ingress.akramboutou.xyz
   - hostname: "*.akramboutou.xyz"
-    service: https://nginx-external-controller.network.svc.cluster.local:443
+    service: https://nginx-controller.network.svc.cluster.local:443
     originRequest:
       originServerName: ingress.akramboutou.xyz
   - service: http_status:404
