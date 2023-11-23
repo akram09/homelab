@@ -1,0 +1,28 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+  generation: 1
+  labels:
+    app.kubernetes.io/instance: jellyfin
+  name: jellyfin
+  namespace: downloads
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: jellyfin.akramboutou.xyz
+      http:
+        paths:
+          - backend:
+              service:
+                name: jellyfin-tcp
+                port:
+                  name: http-tcp
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - jellyfin.akramboutou.xyz
+      secretName: jellyfin-https-tls
