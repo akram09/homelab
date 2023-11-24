@@ -48,7 +48,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: traefik
+        className: nginx
         hosts:
           - host: speedtest.akramboutou.xyz
             paths:
