@@ -30,3 +30,15 @@ spec:
       options: "SUPERUSER"
       password:
         type: AlphaNumeric
+  backups:
+    pgbackrest:
+      repos:
+        - name: repo1
+          volume:
+            volumeClaimSpec:
+              storageClassName: "local-path"
+              accessModes:
+                - "ReadWriteOnce"
+              resources:
+                requests:
+                  storage: 1Gi
