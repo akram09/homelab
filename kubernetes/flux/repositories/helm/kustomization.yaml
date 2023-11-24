@@ -10,6 +10,7 @@ resources:
   # - cloudnative-pg.yaml
   - coredns.yaml
   - crowdsec.yaml
+  - crunchydata.yaml
   - csi-driver-nfs.yaml
   - deliveryhero.yaml
   - descheduler.yaml
