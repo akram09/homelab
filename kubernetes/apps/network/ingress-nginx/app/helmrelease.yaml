@@ -29,7 +29,9 @@ spec:
 
       service:
         enabled: true
-        type: NodePort
+        type: LoadBalancer
+        annotations:
+          metallb.universe.tf/loadBalancerIPs: 192.168.0.142
         allocateLoadBalancerNodePorts: false
 
 

@@ -12,5 +12,4 @@ resources:
   - ./radarr/ks.yaml
   - ./recyclarr/ks.yaml
   - ./sonarr/ks.yaml
-  - ./plex/ks.yaml
   - ./jellyfin/ks.yaml
