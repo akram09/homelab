@@ -9,3 +9,4 @@ resources:
   - ./external-dns/ks.yaml
   - ./cloudflared/ks.yaml
   - ./metallb/ks.yaml
+  - ./librespeed/ks.yaml

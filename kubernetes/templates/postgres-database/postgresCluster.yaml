@@ -1,0 +1,32 @@
+---
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+kind: PostgresCluster
+metadata:
+  name: "${APP}"
+spec:
+  postgresVersion: 15
+  patroni:
+    dynamicConfiguration:
+      synchronous_mode: true
+      postgresql:
+        synchronous_commit: "on"
+        pg_hba:
+          - hostnossl all all 10.244.0.0/16 md5
+          - hostssl all all all md5
+  instances:
+    - name: postgres
+      replicas: 2
+      dataVolumeClaimSpec:
+        storageClassName: local-hostpath
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 5Gi
+  users:
+    - name: "${DB_USER}"
+      databases:
+        - "${DB_NAME}"
+      options: "SUPERUSER"
+      password:
+        type: AlphaNumeric
