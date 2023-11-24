@@ -17,7 +17,7 @@ spec:
     - name: postgres
       replicas: 2
       dataVolumeClaimSpec:
-        storageClassName: local-hostpath
+        storageClassName: local-path
         accessModes:
           - ReadWriteOnce
         resources:
