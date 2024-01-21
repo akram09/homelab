@@ -18,7 +18,6 @@ spec:
     name: homelab
   wait: false
   dependsOn:
-    - name: rook-ceph-cluster
     - name: external-secrets-stores
   postBuild:
     substitute:
