@@ -43,7 +43,7 @@ spec:
               KEYCLOAK_ADMIN_PASSWORD:
                 valueFrom:
                   secretKeyRef:
-                    name: keycloack-secret
+                    name: keycloak-secret
                     key: admin-password
               KC_REALM_NAME:
                 valueFrom:
