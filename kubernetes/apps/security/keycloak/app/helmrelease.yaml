@@ -32,7 +32,8 @@ spec:
         containers:
           main:
             image:
-              repository: quay.io/keycloak/keycloak:23.0.4
+              repository: quay.io/keycloak/keycloak
+              tag: 23.0.4
             env:
               KEYCLOAK_ADMIN:
                 valueFrom:
