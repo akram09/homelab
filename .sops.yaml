@@ -7,3 +7,7 @@ creation_rules:
     key_groups:
       - age:
           - *host_kratos
+  - path_regex: .*\.sops\.ya?ml$
+    key_groups:
+      - age:
+          - *host_kratos

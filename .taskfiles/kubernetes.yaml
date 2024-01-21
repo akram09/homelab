@@ -28,8 +28,8 @@ tasks:
       - chmod go-r "{{.KUBERNETES_DIR}}/kubeconfig"
     vars:
       K3S_PRIMARY_MASTER_NODE_USERNAME: "mgrsys"
-      K3S_PRIMARY_MASTER_NODE_ADDR: "192.168.0.107"
-      K3S_LB_ADDR: "192.168.0.107"
+      K3S_PRIMARY_MASTER_NODE_ADDR: "192.168.1.53"
+      K3S_LB_ADDR: "192.168.1.53"
 
   reconcile:
     desc: Force update Flux to pull in changes from your Git repository

@@ -6,7 +6,7 @@ all:
         master:
           hosts:
             kratos:
-              ansible_host: 192.168.0.107
+              ansible_host: 192.168.1.53
               k3s_primary_control_node: true
 
     remote:
