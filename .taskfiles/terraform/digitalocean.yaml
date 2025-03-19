@@ -1,0 +1,51 @@
+---
+version: "3"
+
+
+vars:
+  SSH_KEY: ~/.ssh/digital-ocean/id_rsa.pub
+tasks:
+  plan:
+    description: Plan the Digital Ocean infrastructure
+    dir: infrastructure/terraform/digitalocean
+    cmds:
+      - sops -d creds.sops.yaml > creds.yaml
+      - defer: rm creds.yaml
+      - export TF_VAR_do_token=$(yq -r '.token' < creds.yaml) &&
+        export TF_VAR_do_homelab_ssh_key={{.SSH_KEY}} &&
+        terraform init &&
+        terraform plan
+    preconditions:
+      - sh: test -f {{.SSH_KEY}}
+        msg: |
+          SSH key not found. Please create a keypair and set the SSH_KEY environment variable.
+
+  apply:
+    description: Apply the Digital Ocean infrastructure
+    dir: infrastructure/terraform/digitalocean
+    cmds:
+      - sops -d creds.sops.yaml > creds.yaml
+      - defer: rm creds.yaml
+      - export TF_VAR_do_token=$(yq -r '.token' < creds.yaml) &&
+        export TF_VAR_do_homelab_ssh_key={{.SSH_KEY}} &&
+        terraform init &&
+        terraform apply -auto-approve
+    preconditions:
+      - sh: test -f {{.SSH_KEY}}
+        msg: |
+          SSH key not found. Please create a keypair and set the SSH_KEY environment variable.
+
+  destroy:
+    description: Destroy the Digital Ocean infrastructure
+    dir: infrastructure/terraform/digitalocean
+    cmds:
+      - sops -d creds.sops.yaml > creds.yaml
+      - defer: rm creds.yaml
+      - export TF_VAR_do_token=$(yq -r '.token' < creds.yaml) &&
+        export TF_VAR_do_homelab_ssh_key={{.SSH_KEY}} &&
+        terraform init &&
+        terraform destroy -auto-approve
+    preconditions:
+      - sh: test -f {{.SSH_KEY}}
+        msg: |
+          SSH key not found. Please create a keypair and set the SSH_KEY environment variable.

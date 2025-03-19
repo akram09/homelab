@@ -26,6 +26,7 @@ tasks:
         terraform
         tflint
         yamllint
+        yq
 
 # age: SOP dependency
 # ansible: homelab provisioning
@@ -42,3 +43,4 @@ tasks:
 # terraform: Cloudflare provisioning
 # tflint: Terraform linting
 # yamllint: Yaml linting
+# yq: Yaml query

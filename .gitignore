@@ -1,0 +1,36 @@
+# Local Terraform state
+*.tfstate
+*.tfstate.backup
+
+# Crash logs
+crash.log
+crash.*.log
+
+# Terraform plan files
+*.tfplan
+
+# Terraform lock file
+.terraform.lock.hcl
+
+# Terraform working directory
+.terraform/
+
+# Ignore environment variable files
+.env
+.envrc
+
+
+# Ignore IDE/editor specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.bak
+
+# Ignore macOS & Linux artifacts
+.DS_Store
+*.log
+*.out
+
+# Ignore Go-Task cache if used
+.task/

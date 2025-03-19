@@ -21,7 +21,7 @@ includes:
   precommit: .taskfiles/precommit.yaml
   setup: .taskfiles/setup_{{OS}}.yaml
   sops: .taskfiles/sops.yaml
-  terraform: .taskfiles/terraform.yaml
+  digitalocean: .taskfiles/terraform/digitalocean.yaml
 
 tasks:
   default:
@@ -36,7 +36,15 @@ tasks:
       - task: precommit:init
       - task: precommit:update
       - task: setup-age
+      - task: setup-ssh
       - echo "Next, install python dependencies with 'task python'"
+
+  setup-ssh:
+    desc: Setup SSH keys
+    cmds:
+      - mkdir -p ~/.ssh/kratos
+      - ssh-keygen -t id_ed25519 -f ~/.ssh/kratos/id_ed25519 -N ""
+
 
   setup-age:
     cmds:
