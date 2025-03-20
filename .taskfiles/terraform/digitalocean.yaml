@@ -4,6 +4,8 @@ version: "3"
 
 vars:
   SSH_KEY: ~/.ssh/digital-ocean/id_rsa.pub
+  SSH_PRIVATE_KEY: ~/.ssh/digital-ocean/id_rsa
+
 tasks:
   plan:
     description: Plan the Digital Ocean infrastructure
@@ -46,6 +48,10 @@ tasks:
         export TF_VAR_do_homelab_ssh_key={{.SSH_KEY}} &&
         terraform output | awk '{ print $3 }' | sed "s/\"//g" | xargs -I {} yq e -i '.all.children.kubernetes.children.master.hosts.kratos.ansible_host = "{}"' ../../ansible/inventory/hosts.sops.yaml
       - sops -e --in-place ../../ansible/inventory/hosts.sops.yaml
+      # Decrypt the host_vars file, update the ansible_ssh_private_key_file and encrypt it back
+      - sops -d --in-place ../../ansible/inventory/host_vars/kratos.sops.yaml
+      - echo '{{.SSH_PRIVATE_KEY}}' | xargs -I {} yq e -i '.ansible_ssh_private_key_file = "{}"' ../../ansible/inventory/host_vars/kratos.sops.yaml
+      - sops -e --in-place ../../ansible/inventory/host_vars/kratos.sops.yaml
 
     preconditions:
       - sh: test -f {{.SSH_KEY}}
