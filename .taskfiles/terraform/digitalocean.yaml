@@ -35,6 +35,23 @@ tasks:
         msg: |
           SSH key not found. Please create a keypair and set the SSH_KEY environment variable.
 
+  output:
+    description: Output the ip address to ansible hosts file and encrypt it
+    dir: infrastructure/terraform/digitalocean
+    cmds:
+      - sops -d creds.sops.yaml > creds.yaml
+      - defer: rm creds.yaml
+      - sops -d --in-place ../../ansible/inventory/hosts.sops.yaml
+      - export TF_VAR_do_token=$(yq -r '.token' < creds.yaml) &&
+        export TF_VAR_do_homelab_ssh_key={{.SSH_KEY}} &&
+        terraform output | awk '{ print $3 }' | sed "s/\"//g" | xargs -I {} yq e -i '.all.children.kubernetes.children.master.hosts.kratos.ansible_host = "{}"' ../../ansible/inventory/hosts.sops.yaml
+      - sops -e --in-place ../../ansible/inventory/hosts.sops.yaml
+
+    preconditions:
+      - sh: test -f {{.SSH_KEY}}
+        msg: |
+          SSH key not found. Please create a keypair and set the SSH_KEY environment variable.
+
   destroy:
     description: Destroy the Digital Ocean infrastructure
     dir: infrastructure/terraform/digitalocean

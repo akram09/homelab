@@ -46,3 +46,8 @@ resource "digitalocean_droplet" "kratos" {
     ssh_keys = [digitalocean_ssh_key.homelab.id]
     volume_ids = [digitalocean_volume.kratos-volume.id]
 }
+
+
+output "kratos_ip" {
+  value = digitalocean_droplet.kratos.ipv4_address
+}

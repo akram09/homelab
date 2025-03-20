@@ -1,0 +1,32 @@
+all:
+    children:
+        kubernetes:
+            children:
+                master:
+                    hosts:
+                        kratos:
+                            ansible_host: ENC[AES256_GCM,data:CahlVRAvQkBRiFu3KYE=,iv:yXd4sQiaZM4mZxBlvJkcyfDhVFQ31lcHDeYwOYgokZw=,tag:BCLHSyuMarbkWifDrRGw4Q==,type:str]
+                            k3s_primary_control_node: ENC[AES256_GCM,data:CYuRoQ==,iv:kzhK2xN1uwkSWgYL6GbjF4tX7FSdLvzuC+utTDS4FS8=,tag:UY47vdhbhNdv+ieuDtvJqQ==,type:bool]
+        remote:
+            hosts:
+                erudites: null
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1yfq0fyh2zthkacffmylwnaqdl79fu6273h5c5kpr4rcr5l8nrg5qdrd54u
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBuZjgvVkZRYmJsbzNkRVZr
+            R3JFdFh1dE52VnN4ZVZkblVFK1RjNEc0UnhVCmVKWit5c0owU2twUnhTOHIxSVBy
+            QjhaTW5lSUJQV2Q3SU8vVVpwN3UrUUEKLS0tIDF4VDF6Y3JIUUlyZk9zRlI3c1Z1
+            WWtkN0gwMXdRaC9xNnZ0dWw3SENiQVUKzqFg3mvFxRaq7b2vrmbpCONC5XBQ9L3O
+            DlTIEgwQiHalF9VgcT2DmF75eYl0rjQeqZ8eCp2AJ5hE+8gw0F2clA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-03-20T16:36:27Z"
+    mac: ENC[AES256_GCM,data:NP1+xyQsln0PZzGKxsdXcSQTdpP1qT6rctUbo9zkoCzyxlfrqm1CWjWe93wDYxKyurKPdn28BosUJqv+4NHYDOUvepnw/8/YrUs3LFcjPZPpjegPDrXRfViyP/ttr2MBPgsC9bqNGFvJp5JbaeFqTQf5lnIMOxNTJC+MlI4VUBQ=,iv:FU+kbaH9ELzWD77aWotL4xCC1AbehItVeVShNyiYeGQ=,tag:9fQQun5M43qWLHbAIYQEyA==,type:str]
+    pgp: []
+    unencrypted_suffix: _unencrypted
+    version: 3.9.4
