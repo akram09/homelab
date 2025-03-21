@@ -8,10 +8,16 @@
     include:
       - kubecolor
 
+- name: Create .envrc file
+  ansible.builtin.file:
+    path: "/{{ ansible_user }}/.envrc"
+    state: touch
+    mode: '0644'
+
 - name: Alias kubectl with kubecolor
   become: false
   ansible.builtin.lineinfile:
-    path: "/home/{{ ansible_user }}/.envrc"
+    path: "/{{ ansible_user }}/.envrc"
     line: 'alias kubectl="kubecolor"'
 
 - name: Allow user directory direnv

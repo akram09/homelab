@@ -34,3 +34,7 @@ crash.*.log
 
 # Ignore Go-Task cache if used
 .task/
+
+# Kubernetes
+kubeconfig
+*/kubeconfig

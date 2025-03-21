@@ -1,0 +1,30 @@
+---
+- name: Add apt-fast PPA
+  ansible.builtin.apt_repository:
+    repo: ppa:apt-fast/stable
+    state: present
+
+- name: Install required packages
+  ansible.builtin.apt:
+    state: present
+    update_cache: true
+    name:
+      - apt-fast
+
+- name: Enable APT color output
+  ansible.builtin.lineinfile:
+    dest: /etc/apt/apt.conf.d/99color
+    line: 'Dpkg::Progress-Fancy "1";'
+    create: true
+
+- name: Enable APT parallel downloads
+  ansible.builtin.lineinfile:
+    dest: /etc/apt/apt.conf.d/99parallel
+    line: 'Acquire::Queue-Mode "access";'
+    create: true
+
+- name: Add ILoveCandy to APT
+  ansible.builtin.lineinfile:
+    dest: /etc/apt/apt.conf.d/99candy
+    line: 'APT::Color "1";'
+    create: true

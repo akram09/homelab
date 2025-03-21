@@ -1,0 +1,15 @@
+---
+- name: Upgrade packages
+  ansible.builtin.package:
+    update_cache: true
+    upgrade: dist
+
+- name: Install dependencies
+  ansible.builtin.package:
+    state: latest
+    name:
+      - curl
+      - net-tools
+      # For volume mounts not via csi-driver-nfs
+      - nfs-common  # Ubuntu equivalent
+      - python3-kubernetes  # Ubuntu equivalent

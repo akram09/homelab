@@ -16,10 +16,10 @@
       ansible.builtin.fail:
         msg:
           - "Unsupported distribution: {{ ansible_facts['distribution'] | lower }}"
-          - This role only supports Arch Linux
-      when: ansible_facts['distribution'] | lower != 'archlinux'
+          - This role only supports Arch Linux and Ubuntu
+      when: ansible_facts['distribution'] | lower != 'archlinux' and ansible_facts['distribution'] | lower != 'ubuntu'
 
-    - name: Install packages
+    - name: Install packages (Arch Linux)
       ansible.builtin.package:
         state: latest
         name:
@@ -57,6 +57,42 @@
           - fd
           - gdu
           - bottom
+      when: ansible_facts['distribution'] | lower == 'archlinux'
+
+
+    - name: Install packages (Ubuntu)
+      ansible.builtin.apt:
+        name:
+          - base
+          - dhcpcd5
+          - dosfstools
+          - efibootmgr
+          - git
+          - grub-efi-amd64
+          - vim
+          - linux-generic
+          - linux-headers-generic
+          - linux-firmware
+          - mtools
+          - nano
+          - os-prober
+          - btop
+          - curl
+          - intel-microcode
+          - mesa-utils
+          - network-manager
+          - net-tools
+          - openssh-server
+          - rsync
+          - smartmontools
+          - tmux
+          - trash-cli
+          - unzip
+          - usbutils
+          - zsh
+          - python3-pip
+      when: ansible_facts['distribution'] | lower == 'ubuntu'
+
 
     - name: Install AUR dependencies
       ansible.builtin.include_role:
@@ -67,6 +103,16 @@
           - downgrade
           - vim-plug
           - needrestart
+      when: ansible_facts['distribution'] | lower == 'archlinux'
+
+    - name: Install Ubuntu Dependencies
+      ansible.builtin.apt:
+        name:
+          - vim
+          - needrestart
+        state: latest
+        update_cache: true
+      when: ansible_facts['distribution'] | lower == 'ubuntu'
 
   roles:
     - clamav

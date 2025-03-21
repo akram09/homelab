@@ -3,6 +3,7 @@
 supported_distributions:
   - archlinux
   - debian
+  - ubuntu
 
 # (string) Timezone for the servers
 timezone: "{{ lookup('ansible.builtin.env', 'TIMEZONE') | default('Europe/Paris', true) }}"

@@ -35,7 +35,13 @@ tasks:
     desc: Install Kubernetes on the nodes
     dir: infrastructure/ansible
     cmds:
+      - sops -d inventory/hosts.sops.yaml > inventory/hosts.yaml
+      - defer: rm inventory/hosts.yaml
       - ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yaml {{.ANSIBLE_PLAYBOOK_DIR}}/kubernetes.yaml
+      # Encrypt kubeconfig
+      - mv ../../provision/kubeconfig ../../provision/kubeconfig.sops.yaml
+      - sops -e --in-place ../../provision/kubeconfig.sops.yaml
+
 
   status:
     desc: Show k3s service status

@@ -3,10 +3,10 @@
   fail:
     msg:
       - "Unsupported distribution: {{ ansible_facts['distribution'] | lower }}"
-      - This role only supports Arch Linux
-  when: ansible_facts['distribution'] | lower != 'archlinux'
+      - This role only supports Arch Linux and Ubuntu
+  when: ansible_facts['distribution'] | lower != 'archlinux' and ansible_facts['distribution'] | lower != 'ubuntu'
 
-- name: Install dependencies
+- name: Install dependencies (Arch Linux)
   ansible.builtin.package:
     state: latest
     name:
@@ -16,6 +16,19 @@
       # Virtual machines
       # - cockpit-machines
       # - udisks2
+  when: ansible_facts['distribution'] | lower == 'archlinux'
+
+- name: Install dependencies (Ubuntu)
+  ansible.builtin.package:
+    state: latest
+    name:
+      - cockpit
+      - pcp
+      - pcp-webapi
+      # Virtual machines
+      # - cockpit-machines
+      # - udisks2
+  when: ansible_facts['distribution'] | lower == 'ubuntu'
 
 # - name: Install ZFS plugin
 #   ansible.builtin.include_role:

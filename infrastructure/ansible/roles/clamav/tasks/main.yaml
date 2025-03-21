@@ -1,10 +1,20 @@
 # https://wiki.archlinux.org/title/ClamAV
 ---
-- name: Install dependencies
+- name: Install dependencies (Arch)
   ansible.builtin.package:
     state: latest
     name:
       - clamav
+  when: ansible_facts['distribution'] | lower == 'archlinux'
+
+- name: Install dependencies (Ubuntu)
+  ansible.builtin.apt:
+    name:
+      - clamav
+      - clamav-daemon
+      - clamav-freshclam
+      - fangfrisch
+  when: ansible_facts['distribution'] | lower == 'ubuntu'
 
 - name: Enable clamav daemon
   ansible.builtin.systemd:
@@ -24,13 +34,42 @@
   register: fangfrisch_result
 
 - block:
-    - name: Install fangfrisch database repo
+    - name: Install fangfrisch database repo (Arch)
       ansible.builtin.include_role:
         name: aur
       vars:
         state: latest
         packages:
           - python-fangfrisch
+      when: ansible_facts['distribution'] | lower == 'archlinux'
+
+    - name: Install fangfrisch database repo (Ubuntu)
+      ansible.builtin.apt:
+        name:
+          - fangfrisch
+      when: ansible_facts['distribution'] | lower == 'ubuntu'
+
+    - name: Ensure Fangfrisch config directory exists
+      ansible.builtin.file:
+        path: /etc/fangfrisch
+        state: directory
+        owner: clamav
+        group: clamav
+        mode: '0755'
+
+    - name: Create default Fangfrisch config file
+      ansible.builtin.copy:
+        dest: /etc/fangfrisch/fangfrisch.conf
+        content: |
+          [DEFAULT]
+          db_url = sqlite:////var/lib/fangfrisch/db.sqlite
+          local_directory = /var/lib/clamav
+          [urlhaus]
+          enabled = yes
+        owner: clamav
+        group: clamav
+        mode: '0644'
+      when: not fangfrisch_result.stat.exists
 
     - name: Create database structure
       become_user: clamav
@@ -42,10 +81,3 @@
   ansible.builtin.systemd:
     name: fangfrisch.timer
     enabled: true
-
-      #- name: Test clamav installation # noqa no-changed-when
-      #ansible.builtin.shell: |
-      #set -o pipefail
-      #curl -s https://secure.eicar.org/eicar.com.txt | clamscan -
-      #register: clamav__test_result
-      #failed_when: "'FOUND' not in clamav__test_result.stdout"

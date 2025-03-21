@@ -1,6 +1,7 @@
 ---
 supported_distributions:
   - archlinux
+  - ubuntu
 
 allow_reboot: false
 stale_containers_state: enabled

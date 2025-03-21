@@ -21,12 +21,12 @@
     name: ssh
     state: present
 
+
 - name: "Setup user groups, set user shell to {{ shell }}"
   become: true
   ansible.builtin.user:
     name: "{{ ansible_user }}"
     shell: "{{ shell }}"
     groups:
-      - wheel
       - sudo
       - ssh
