@@ -14,6 +14,12 @@
       register: debian_reboot_required_result
       when: ansible_facts['distribution'] | lower == 'debian'
 
+    - name: Find reboot-required file (Ubuntu)
+      ansible.builtin.stat:
+        path: /var/run/reboot-required
+      register: ubuntu_reboot_required_result
+      when: ansible_facts['distribution'] | lower == 'ubuntu'
+
     - name: Find reboot-required file
       ansible.builtin.command: needrestart -q
       register: archlinux_reboot_required_result
@@ -21,7 +27,7 @@
 
     - name: Set reboot requirement fact
       ansible.builtin.set_fact:
-        reboot_required: "{{ archlinux_reboot_required_result.rc != 0 if ansible_facts['distribution'] | lower == 'archlinux' else debian_reboot_required_result.stat.exists }}"
+        reboot_required: "{{ archlinux_reboot_required_result.rc != 0 if ansible_facts['distribution'] | lower == 'archlinux' else ubuntu_reboot_required_result.stat.exists }}"
 
     - name: Host vars
       ansible.builtin.debug:
@@ -29,9 +35,9 @@
           - "Distribution version: {{ ansible_distribution_version }}"
           - "Host network CIDR: {{ (ansible_default_ipv4.network + '/' + ansible_default_ipv4.netmask) | ansible.utils.ipaddr('network/prefix') }}"
           - "Distribution: {{ ansible_facts['distribution'] }}"
-          - "Processor: {{ ansible_processor | select('match', '.*CPU.*') | list | unique | first }}"
-          - "k3s.service: {{ k3s_service_result.status.ActiveState }}"
-          - "Reboot required: {{ reboot_required }}"
+          - "Processor: {{ (ansible_processor | select('match', '.*CPU.*') | list | unique | first) | default('Unknown CPU', true) }}"
+          - "k3s.service: {{ k3s_service_result.status.ActiveState | default('Unknown') }}"
+          - "Reboot required: {{ reboot_required | default('Unknown') }}"
 
     - name: Local vars
       ansible.builtin.debug:

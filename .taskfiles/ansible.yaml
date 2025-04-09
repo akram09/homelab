@@ -47,6 +47,8 @@ tasks:
     desc: Show k3s service status
     dir: infrastructure/ansible
     cmds:
+      - sops -d inventory/hosts.sops.yaml > inventory/hosts.yaml
+      - defer: rm inventory/hosts.yaml
       - ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yaml {{.ANSIBLE_PLAYBOOK_DIR}}/status.yaml
 
   uninstall-kubernetes:
