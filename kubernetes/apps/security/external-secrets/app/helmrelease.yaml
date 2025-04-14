@@ -10,8 +10,8 @@ spec:
   chart:
     spec:
       chart: external-secrets
-      version: 0.15.1
-      interval: 30m
+      version: 0.16.0
+      interval: 10m
       sourceRef:
         kind: HelmRepository
         name: external-secrets
